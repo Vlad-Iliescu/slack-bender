@@ -21,6 +21,11 @@ app.get '/', (req, res, next)->
     #todo: refactor if time allows
     channel = slack.getChannelGroupOrDMByID(req.query.channel_id)
     channel.send req.query.text.substring(4)
+  else if req.query.text.toLowerCase() == 'topic'
+    channel = slack.getChannelGroupOrDMByID(req.query.channel_id)
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    day = days[new Date().getDay()]
+    channel.setTopic('Fucking ' + day + '!!')
     
   res.status(200).send(null)
 
