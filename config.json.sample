@@ -1,0 +1,6 @@
+{
+  "slackToken": "<YOUR TOKEN HERE>",
+  "autoReconnect": true,
+  "autoMark": true,
+  "organisation": "<YOUR ORGANISATION>"
+}

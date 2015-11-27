@@ -2,9 +2,9 @@
   "name": "slack-app",
   "description": "just a bot",
   "version": "0.0.1",
-  "repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/Vlad-Iliescu/slack-bender.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vlad-Iliescu/slack-bender.git"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
