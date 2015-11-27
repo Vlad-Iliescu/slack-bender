@@ -51,7 +51,10 @@ app.get '/', (req, res, next)->
       minutes =  Math.floor(diff / (1000*60))
       diff -= minutes*60*1000
       seconds =  Math.floor(diff / 1000)
-      channel.send('' + hours.toFixed(0) + ' hours ' + minutes + 'minutes ' + seconds + 'seconds `till meal. Hehe, sucker!')
+      channel.send(
+        (hours > 0 ? '' + hours.toFixed(0) + ' hours ' : '') + 
+          ((minutes > 0 || hours > 0) ? '' + minutes + 'minutes ' : '') + 
+          (seconds + 'seconds `till meal. Hehe, sucker!'))
       
     else if diff <= 5*60*1000 || diff >= -30*60*1000 # 12:25 -> 13:00
       channel.send('No giphy! But get ready for meal.')
