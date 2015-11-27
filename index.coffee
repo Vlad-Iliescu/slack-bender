@@ -41,9 +41,10 @@ app.get '/', (req, res, next)->
     
   else if command == 'meal'
     channel = initChannel(req.query.channel_id)
+    hours_text = minutes_text = ''
     now = new Date();
     noon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 30, 0)
-    diff = noon - now
+    diff = noon - now - 60*60*1000
 
     if diff > 5*60*1000 # 00:00 -> 12:15
       hours =  Math.floor(diff / (1000*60*60))
@@ -51,16 +52,18 @@ app.get '/', (req, res, next)->
       minutes =  Math.floor(diff / (1000*60))
       diff -= minutes*60*1000
       seconds =  Math.floor(diff / 1000)
+      hours_text = ('' + hours + ' hours ') if hours > 0
+      minutes_text = ('' + minutes + ' minutes ') if (minutes > 0 || hours > 0) 
       channel.send(
-        (hours > 0 ? '' + hours.toFixed(0) + ' hours ' : '') + 
-          ((minutes > 0 || hours > 0) ? '' + minutes + 'minutes ' : '') + 
-          (seconds + 'seconds `till meal. Hehe, sucker!'))
+        hours_text + minutes_text + 
+        seconds + ' seconds `till meal. Hehe, sucker!'
+      )
       
-    else if diff <= 5*60*1000 || diff >= -30*60*1000 # 12:25 -> 13:00
-      channel.send('No giphy! But get ready for meal.')
+    else if diff <= 5*60*1000 && diff >= -30*60*1000 # 12:25 -> 13:00
+      channel.send('http://blastdev.com/bender.php?term=meal&t=' + new Date().getTime())
 
     else #past 13:00 
-      channel.send('Meal ended long time aqo. I\'m so embarassed, I wish everyone was dead except me!')
+      channel.send('Meal ended long time ago. I\'m so embarassed, I wish everyone was dead except me!')
     
   else
     response = "Usage: \n/bender amr \n/bender say [text] \n/bender topic \n/bender meal"
