@@ -9,6 +9,7 @@
   "dependencies": {
     "coffee-script": "^1.10.0",
     "express": "^4.13.3",
-    "slack-client": "^1.4.1"
+    "slack-client": "^1.4.1",
+    "webshot": "^0.16.0"
   }
 }

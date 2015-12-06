@@ -86,4 +86,14 @@ app.get '/', (req, res, next)->
       
   res.status(200).send(response)
 
+app.get '/webshot', (req, res, next)->
+  webshot = require('webshot')
+  fs      = require('fs')
+
+  renderStream = webshot('google.com')
+  file = fs.createWriteStream('google.png', {encoding: 'binary'})
+
+  renderStream.on 'data', (data)->
+    file.write(data.toString('binary'), 'binary')
+
 app.listen(8181);
