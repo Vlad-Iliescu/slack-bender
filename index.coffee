@@ -86,4 +86,32 @@ app.get '/', (req, res, next)->
       
   res.status(200).send(response)
 
+app.get '/webshot', (req, res, next)->
+  casper = require('casper').create();
+  casper.start('http://blastdev.com/');
+
+  casper.waitFor (
+    ->
+      @evaluate ->
+        document.querySelectorAll('div.bit').length > 0
+    ->
+      @captureSelector('blastdev.png', 'div.timer-container')
+      return
+    ->
+      @echo("I can't haz my screenshot.").exit();
+      return
+  )
+
+  casper.run();
+  res.send('200')
+  return
+  
+#  fs      = require('fs')
+#
+#  renderStream = webshot('google.com')
+#  file = fs.createWriteStream('google.png', {encoding: 'binary'})
+#
+#  renderStream.on 'data', (data)->
+#    file.write(data.toString('binary'), 'binary')
+
 app.listen(8181);
